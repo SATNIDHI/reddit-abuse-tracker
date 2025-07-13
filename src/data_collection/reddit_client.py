@@ -22,9 +22,9 @@ class RedditClient:
     def __init__(self):
         """Initialize Reddit client with API credentials"""
         self.reddit = praw.Reddit(
-            client_id=os.getenv('REDDIT_CLIENT_ID'),
-            client_secret=os.getenv('REDDIT_CLIENT_SECRET'),
-            user_agent=os.getenv('REDDIT_USER_AGENT', 'abuse-tracker-v1.0')
+            client_id=os.getenv('q6EFuLCHhs8M3dvRnKBsnQ'),
+            client_secret=os.getenv('ZwmvFvfFYOB0GX2Zqk5Jbrs9jur_jg'),
+            user_agent=os.getenv('REDDIT_USER_AGENT', 'Inner-Musician-8328')
         )
         
         # Test connection
@@ -35,15 +35,15 @@ class RedditClient:
             logger.error(f"❌ Reddit API connection failed: {e}")
             raise
     
-    def get_subreddit_posts(self, subreddit_name: str, limit: int = 100, 
+    def get_subreddit_posts(self, subreddit_name: IndianTeenagers, limit: int = 100, 
                            time_filter: str = 'day') -> List[Dict]:
         """
         Collect posts from a subreddit
         
         Args:
-            subreddit_name: Name of the subreddit (without r/)
-            limit: Number of posts to collect
-            time_filter: Time filter (hour, day, week, month, year, all)
+            subreddit_name: IndianTeenagers 
+            limit: 100
+            time_filter: week
             
         Returns:
             List of post dictionaries
@@ -81,65 +81,16 @@ class RedditClient:
             logger.error(f"❌ Error collecting posts from r/{subreddit_name}: {e}")
             return []
     
-    def get_post_comments(self, post_id: str, limit: int = 100) -> List[Dict]:
-        """
-        Collect comments from a specific post
-        
-        Args:
-            post_id: Reddit post ID
-            limit: Number of comments to collect
-            
-        Returns:
-            List of comment dictionaries
-        """
-        try:
-            submission = self.reddit.submission(id=post_id)
-            comments = []
-            
-            logger.info(f"🔍 Collecting comments from post {post_id}")
-            
-            # Expand all comments
-            submission.comments.replace_more(limit=0)
-            
-            comment_count = 0
-            for comment in submission.comments.list():
-                if comment_count >= limit:
-                    break
-                    
-                comment_data = {
-                    'id': comment.id,
-                    'body': comment.body,
-                    'author': str(comment.author) if comment.author else '[deleted]',
-                    'subreddit': str(comment.subreddit),
-                    'score': comment.score,
-                    'created_utc': comment.created_utc,
-                    'parent_id': comment.parent_id,
-                    'post_id': post_id,
-                    'is_submitter': comment.is_submitter
-                }
-                comments.append(comment_data)
-                comment_count += 1
-                
-                # Be respectful to Reddit's API
-                time.sleep(0.1)
-            
-            logger.info(f"✅ Collected {len(comments)} comments from post {post_id}")
-            return comments
-            
-        except Exception as e:
-            logger.error(f"❌ Error collecting comments from post {post_id}: {e}")
-            return []
-    
-    def search_posts(self, query: str, subreddit_name: str = None, 
+    def search_posts(self, query: str, subreddit_name: IndianTeenagers = None, 
                      limit: int = 100, time_filter: str = 'week') -> List[Dict]:
         """
         Search for posts containing specific keywords
         
         Args:
-            query: Search query
-            subreddit_name: Specific subreddit to search (optional)
-            limit: Number of posts to return
-            time_filter: Time filter for search
+            query: bitch
+            subreddit_name: IndianTeenagers
+            limit: 100
+            time_filter: month
             
         Returns:
             List of post dictionaries
