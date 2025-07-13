@@ -1,0 +1,21 @@
+app:
+  name: "Reddit Abuse Tracker"
+  version: "1.0.0"
+  debug: true
+
+reddit_api:
+  rate_limit: 60
+  timeout: 30
+
+database:
+  url: "sqlite:///reddit_abuse.db"
+  echo: false
+
+detection:
+  confidence_threshold: 0.7
+  enable_ml: true
+  enable_rules: true
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
