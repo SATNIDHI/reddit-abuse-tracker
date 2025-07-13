@@ -22,8 +22,8 @@ class RedditClient:
     def __init__(self):
         """Initialize Reddit client with API credentials"""
         self.reddit = praw.Reddit(
-            client_id=os.getenv('q6EFuLCHhs8M3dvRnKBsnQ'),
-            client_secret=os.getenv('ZwmvFvfFYOB0GX2Zqk5Jbrs9jur_jg'),
+            client_id=os.getenv('REDDIT_CLIENT_ID'),
+            client_secret=os.getenv('REDDIT_CLIENT_SECRET'),
             user_agent=os.getenv('REDDIT_USER_AGENT', 'Inner-Musician-8328')
         )
         
@@ -35,19 +35,9 @@ class RedditClient:
             logger.error(f"❌ Reddit API connection failed: {e}")
             raise
     
-    def get_subreddit_posts(self, subreddit_name: IndianTeenagers, limit: int = 100, 
+    def get_subreddit_posts(self, subreddit_name: str , limit: int = 100, 
                            time_filter: str = 'day') -> List[Dict]:
-        """
-        Collect posts from a subreddit
-        
-        Args:
-            subreddit_name: IndianTeenagers 
-            limit: 100
-            time_filter: week
-            
-        Returns:
-            List of post dictionaries
-        """
+       
         try:
             subreddit = self.reddit.subreddit(subreddit_name)
             posts = []
@@ -81,8 +71,9 @@ class RedditClient:
             logger.error(f"❌ Error collecting posts from r/{subreddit_name}: {e}")
             return []
     
-    def search_posts(self, query: str, subreddit_name: IndianTeenagers = None, 
+    def search_posts(self, query: str, subreddit_name: str  = None, 
                      limit: int = 100, time_filter: str = 'week') -> List[Dict]:
+        
         """
         Search for posts containing specific keywords
         
@@ -140,9 +131,9 @@ if __name__ == "__main__":
     posts = client.get_subreddit_posts('Python', limit=5)
     print(f"Collected {len(posts)} posts")
     
-    if posts:
-        print(f"First post: {posts[0]['title']}")
+    # if posts:
+    #     print(f"First post: {posts[0]['title']}")
         
-        # Test collecting comments from first post
-        comments = client.get_post_comments(posts[0]['id'], limit=3)
-        print(f"Collected {len(comments)} comments from first post")
+    #     # Test collecting comments from first post
+    #     comments = client.get_post_comments(posts[0]['id'], limit=3)
+    #     print(f"Collected {len(comments)} comments from first post")
